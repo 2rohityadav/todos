@@ -30,5 +30,11 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./public/index.html" // Used template key for looking HTML file.
     })
-  ]
+  ],
+  devtool: "cheap-module-eval-source-map",
+  // using this devtool get the exeact location of error occured,
+  devServer: {
+    historyApiFallback: true
+    // historyApiFallback return index.html and index.html look into bunder.js file or any file u made it to bundle the files then find the relative path and relative component and render it.
+  }
 };
