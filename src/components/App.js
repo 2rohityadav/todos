@@ -1,15 +1,15 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { actions } from "../redux-store/Store";
 import List from "./List";
 import AddItems from "./AddItems";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      todos: []
-    };
-  }
+  //   this.state = { todos: [] };
+  // }
 
   // Add Items
   addItems = item => {
@@ -43,20 +43,44 @@ class App extends Component {
   };
 
   render() {
-    const { todos } = this.state;
+    const { todos } = this.props;
 
     return (
       <React.Fragment>
-        <AddItems addItems={this.addItems} hasItem={todos.length > 0} />
+        <AddItems addItems={this.props.onAddItems} hasItem={todos.length > 0} />
         <List
           todos={todos}
           hasItem={todos.length > 0}
-          removeItem={this.removeItem}
-          clearList={this.clearList}
+          removeItem={this.props.onDeleteItem}
+          clearList={this.props.onClearList}
         />
       </React.Fragment>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    todos: state.todos,
+    error: state.error
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddItems(newItem) {
+      dispatch(actions.addItems(newItem));
+    },
+    onClearList() {
+      dispatch(actions.clearList());
+    },
+    onDeleteItem(item) {
+      dispatch(actions.deleteItem(item));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
 class AddItems extends Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      error: undefined
-    };
-  }
+  //   this.state = {
+  //     error: undefined
+  //   };
+  // }
 
   handleAddItems = e => {
     e.preventDefault();
@@ -15,21 +15,21 @@ class AddItems extends Component {
     const inputTxt = e.target.elements.inputvalue.value.trim();
     const error = this.props.addItems(inputTxt);
 
-    this.setState({
-      //error: error  old fashion
-      error
-    });
+    // this.setState({
+    //   //error: error  old fashion
+    //   error
+    // });
 
     if (!error) {
       e.target.elements.inputvalue.value = "";
     }
   };
   render() {
-    const { hasItem } = this.props;
+    const { hasItem, error } = this.props;
 
     return (
       <React.Fragment>
-        {this.state.error && hasItem && <p>{this.state.error}</p>}
+        {error && hasItem && <p>{error}</p>}
 
         <form onSubmit={this.handleAddItems}>
           <input type="text" name="inputvalue" />
